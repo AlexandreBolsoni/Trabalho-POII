@@ -5,6 +5,8 @@ import  ContainerContent from "./models/ContainerContent";
 const userController = new UserController();
 userController.init().then(() => 
     
+    //testando o controller e se todas as associações estao certas
+    
     userController.users.forEach((user)=>{
         user.userContent.content.forEach((content)=>{
             console.log(content.toString());
