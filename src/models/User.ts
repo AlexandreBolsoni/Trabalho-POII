@@ -3,7 +3,7 @@ import  Address  from './Address';
 import  Company  from './Company';
 import ContainerContent from './ContainerContent';
 
-export class User {
+export  class User {
   private _idUser: number;
   private _name: string;
   private _username: string;
@@ -97,3 +97,5 @@ export class User {
     return `User: ${this.name}, Username: (${this.username}), (${this.address.toString()}), Phone: (${this.phone}), Website: (${this.website}), (${this.company.toString()}) ${this.userContent.toString()}`;
   }
 }
+
+export default User
