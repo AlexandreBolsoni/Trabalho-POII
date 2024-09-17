@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Company = void 0;
 class Company {
     constructor(name, catchPhrase, bs) {
         this._name = name;
@@ -23,5 +22,5 @@ class Company {
         return `Company: ${this.name}, CatchPhrase: (${this.catchPhrase}), Bs: (${this.bs})`;
     }
 }
-exports.Company = Company;
+exports.default = Company;
 //# sourceMappingURL=Company.js.map

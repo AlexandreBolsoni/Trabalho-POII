@@ -1,4 +1,4 @@
-export class Address {
+class Address {
   private _street: string;
   private _suite: string;
   private _city: string;
@@ -42,7 +42,9 @@ export class Address {
     this._zipcode = zipcode;
   }
 
-  toString(): string {
+  public toString(): string {
     return `Address: ${this.street}, Suite: (${this.suite}), City: (${this.city}), Zipcode: (${this.zipcode})`;
   }
 }
+
+export default Address

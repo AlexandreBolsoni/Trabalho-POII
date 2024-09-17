@@ -28,7 +28,17 @@ class Post extends Content{
   get comments(): Comment[] {
     return this._comments;
   }
+  get idUser(): number {
+    return super.idUser;
+  }
 
+  get title(): string {
+    return super.title;
+  }
+
+  set comments(comments: Comment[]) {
+    this._comments = comments;
+  }
   public addComment (comment: Comment){
     this._comments.push(comment);
   }
@@ -36,13 +46,20 @@ class Post extends Content{
   public removeComment (comment: Comment){
     this._comments = this._comments.filter(item => item !== comment);
   }
-  
+
   public search(searchArguments: string): ISearchable[] | undefined {
-    return undefined;
+    if( 
+      this.title.includes(searchArguments) ||
+      this.body.includes(searchArguments) 
+    ){
+      return [this];
+    }else{
+      return undefined;
+    }
   }
   
   public toString(): string {
-    return `Post: ${this.title}\n${this.body}`;
+    return `Post: ${this.title}\n${this.body} \nComments: ${this.comments.map(item => item.toString()).join('\n')}`;
   }
 }
 

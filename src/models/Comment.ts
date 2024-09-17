@@ -36,7 +36,7 @@ class Comment {
   }
 
 
-  toString(): string {
+  public toString(): string {
     return `Comment: ${this.email}, Body: (${this.body})`;
   }
 }

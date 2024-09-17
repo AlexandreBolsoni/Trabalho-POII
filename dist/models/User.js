@@ -1,7 +1,10 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
-const ContainerContent_1 = require("./ContainerContent");
+const ContainerContent_1 = __importDefault(require("./ContainerContent"));
 class User {
     constructor(idUser, name, username, address, phone, website, company) {
         this._idUser = idUser;
@@ -11,7 +14,7 @@ class User {
         this._phone = phone;
         this._website = website;
         this._company = company;
-        this._userContent = new ContainerContent_1.ContainerContent();
+        this._userContent = new ContainerContent_1.default();
     }
     get idUser() {
         return this._idUser;
@@ -52,6 +55,12 @@ class User {
     set website(website) {
         this._website = website;
     }
+    set company(company) {
+        this._company = company;
+    }
+    set userContent(userContent) {
+        this._userContent = userContent;
+    }
     /*search(searchTerm: string): ISearchable[] | null {
       if (this.name.includes(searchTerm) || this.username.includes(searchTerm)) {
         return [this];
@@ -59,7 +68,7 @@ class User {
       return null;
     }*/
     toString() {
-        return `User: ${this.name}, Username: (${this.username}), (${this.address.toString()}), Phone: (${this.phone}), Website: (${this.website}), (${this.company.toString()})`;
+        return `User: ${this.name}, Username: (${this.username}), (${this.address.toString()}), Phone: (${this.phone}), Website: (${this.website}), (${this.company.toString()}) ${this.userContent.toString()}`;
     }
 }
 exports.User = User;

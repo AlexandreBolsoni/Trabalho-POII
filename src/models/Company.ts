@@ -1,4 +1,4 @@
-export class Company {
+class Company {
   private _name: string
   private _catchPhrase: string
   private _bs: string
@@ -24,8 +24,9 @@ export class Company {
       this._name = name;
     }
   
-    toString(): string {
+    public toString(): string {
       return `Company: ${this.name}, CatchPhrase: (${this.catchPhrase}), Bs: (${this.bs})`;
     }
   }
   
+  export default Company

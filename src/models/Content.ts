@@ -10,7 +10,7 @@ abstract class Content implements ISearchable {
     }
 
     get idUser(): number {
-        return this.idUser;
+        return this._idUser;
     }
 
     get title(): string {
@@ -21,10 +21,11 @@ abstract class Content implements ISearchable {
         this._title = title;
     }
 
+
     public toString(): string {
         return `Content: ${this.title}, User: (${this.idUser})`;
     }
-    
+
     abstract search(searchArguments: string): ISearchable[] | undefined;
 }
 

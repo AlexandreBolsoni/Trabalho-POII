@@ -1,25 +1,33 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ContainerContent = void 0;
 class ContainerContent {
     constructor() {
-        this.content = [];
+        this._content = [];
+    }
+    get content() {
+        return this._content;
     }
     add(item) {
-        this.content.push(item);
+        this._content.push(item);
     }
     remove(item) {
-        this.content = this.content.filter(i => i !== item);
+        this._content = this._content.filter(i => i !== item);
     }
     getAll() {
-        return this.content;
+        return this._content;
     }
     search(searchArguments) {
-        return this.content.filter(item => item.search(searchArguments));
+        const results = this._content.map((content) => { content.search(searchArguments); }).filter((item) => item !== undefined);
+        if (results.length > 0) {
+            return results;
+        }
+        else {
+            return undefined;
+        }
     }
     toString() {
-        return this.content.map(item => item.toString()).join('\n');
+        return this._content.map(item => item.toString()).join('\n');
     }
 }
-exports.ContainerContent = ContainerContent;
+exports.default = ContainerContent;
 //# sourceMappingURL=ContainerContent.js.map

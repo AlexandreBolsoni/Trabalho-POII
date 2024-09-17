@@ -6,19 +6,46 @@
 // Passo 2: Instalar os tipos do axios para TypeScript
 // npm install @types/axios --save-dev
 
-/*import axios from 'axios';
-const api = axios.create({
-  baseURL: 'https://jsonplaceholder.typicode.com'
-})*/
-
 const apiURL = "https://jsonplaceholder.typicode.com";
-function fetchData<T>(additionalPath: string = ""): Promise<T> {
-  return new Promise((resolve, reject) => {
-    fetch(apiURL + additionalPath)
-      .then((response) => response.json())
-      .then((data) => resolve(data))
-      .catch((error) => reject(error));
-  });
+async function fetchData<T>(additionalPath: string = ""): Promise<Response> {
+  const response = await fetch(`${apiURL}/${additionalPath}`);
+  return response.json();
 }
 
-export default fetchData ;
+//import axios from 'axios';
+/*import { User } from '../models/User';
+import { Address } from '../models/Address';
+import { Company } from '../models/Company';
+import { Container } from '../models/Container';
+
+export class ApiService {
+  async getUsers(): Promise<User[]> {
+    const response = await axios.get('https://jsonplaceholder.typicode.com/users');
+    return response.data.map((userData: any) => {
+      const address = new Address(
+        userData.address.street,
+        userData.address.suite,
+        userData.address.city,
+        userData.address.zipcode
+      );
+      const company = new Company(
+        userData.company.name,
+        userData.company.catchPhrase,
+        userData.company.bs
+      );
+      const userContent = new Container();
+      return new User(
+        userData.id,
+        userData.name,
+        userData.username,
+        address,
+        userData.phone,
+        userData.website,
+        company,
+        userContent
+      );
+    });
+  }
+}
+*/
+export default fetchData;

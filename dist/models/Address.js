@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Address = void 0;
 class Address {
     constructor(street, suite, city, zipcode) {
         this._street = street;
@@ -36,5 +35,5 @@ class Address {
         return `Address: ${this.street}, Suite: (${this.suite}), City: (${this.city}), Zipcode: (${this.zipcode})`;
     }
 }
-exports.Address = Address;
+exports.default = Address;
 //# sourceMappingURL=Address.js.map

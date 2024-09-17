@@ -23,6 +23,15 @@ class Post extends Content_1.default {
     get comments() {
         return this._comments;
     }
+    get idUser() {
+        return super.idUser;
+    }
+    get title() {
+        return super.title;
+    }
+    set comments(comments) {
+        this._comments = comments;
+    }
     addComment(comment) {
         this._comments.push(comment);
     }
@@ -30,10 +39,16 @@ class Post extends Content_1.default {
         this._comments = this._comments.filter(item => item !== comment);
     }
     search(searchArguments) {
-        return undefined;
+        if (this.title.includes(searchArguments) ||
+            this.body.includes(searchArguments)) {
+            return [this];
+        }
+        else {
+            return undefined;
+        }
     }
     toString() {
-        return `Post: ${this.title}\n${this.body}`;
+        return `Post: ${this.title}\n${this.body} \nComments: ${this.comments.map(item => item.toString()).join('\n')}`;
     }
 }
 exports.default = Post;

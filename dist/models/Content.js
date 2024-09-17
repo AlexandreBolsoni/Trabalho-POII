@@ -6,7 +6,7 @@ class Content {
         this._title = title;
     }
     get idUser() {
-        return this.idUser;
+        return this._idUser;
     }
     get title() {
         return this._title;

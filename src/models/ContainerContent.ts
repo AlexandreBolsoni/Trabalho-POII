@@ -1,26 +1,37 @@
 import  ISearchable  from "./ISeachable";
 import Content from "./Content";
 
-export class ContainerContent implements ISearchable {
-  private content: Content[] = [];
+class ContainerContent implements ISearchable {
+  private _content: Content[] = [];
 
-  add(item: Content): void {
-    this.content.push(item);
+  get content(): Content[] {
+    return this._content;
+  }
+  public add(item: Content): void {
+    this._content.push(item);
   }
 
-  remove(item: Content): void {
-    this.content = this.content.filter(i => i !== item);
+
+  public remove(item: Content): void {
+    this._content = this._content.filter(i => i !== item);
   }
 
-  getAll(): Content[] {
-    return this.content;
+  public getAll(): Content[] {
+    return this._content;
   }
 
-  search(searchArguments: string): ISearchable[] | undefined {
-    return this.content.filter(item => item.search(searchArguments));
+  public search(searchArguments: string): ISearchable[] | undefined {
+    const results = this._content.map( (content) => { content.search(searchArguments)}).filter( (item) => item !== undefined);
+    if(results.length > 0){
+      return results;
+    }else{
+      return undefined;
+    }
   }
 
-  toString(): string {
-    return this.content.map(item => item.toString()).join('\n');
+  public toString(): string {
+    return this._content.map(item => item.toString()).join('\n');
   }
 }
+
+export default ContainerContent

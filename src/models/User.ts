@@ -1,17 +1,18 @@
 import ISearchable from './ISeachable';
-import { Address } from './Address';
-import { Company } from './Company';
-import { ContainerContent } from './ContainerContent';
+import  Address  from './Address';
+import  Company  from './Company';
+import ContainerContent from './ContainerContent';
 
 export class User {
-  private _idUser: number
-  private _name: string
-  private _username: string
-  private _address: Address
-  private _phone: string
-  private _website: string
-  private _company: Company
-  private _userContent: ContainerContent
+  private _idUser: number;
+  private _name: string;
+  private _username: string;
+  private _address: Address;
+  private _phone: string;
+  private _website: string;
+  private _company: Company;
+  private _userContent: ContainerContent;
+
   constructor( idUser: number, name: string, username: string, address: Address, phone: string, website: string, company: Company) {
     this._idUser = idUser;
     this._name = name;
@@ -76,6 +77,13 @@ export class User {
     this._website = website;
   }
 
+  set company(company: Company) {
+    this._company = company;
+  }
+
+  set userContent(userContent: ContainerContent) {
+    this._userContent = userContent;
+  }
 
 
  /*search(searchTerm: string): ISearchable[] | null {
@@ -85,7 +93,7 @@ export class User {
    return null;
  }*/
 
-  toString(): string {
-    return `User: ${this.name}, Username: (${this.username}), (${this.address.toString()}), Phone: (${this.phone}), Website: (${this.website}), (${this.company.toString()})`;
+   public toString(): string {
+    return `User: ${this.name}, Username: (${this.username}), (${this.address.toString()}), Phone: (${this.phone}), Website: (${this.website}), (${this.company.toString()}) ${this.userContent.toString()}`;
   }
 }
