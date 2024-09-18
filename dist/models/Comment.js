@@ -2,13 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 class Comment {
     constructor(idComment, postId, email, body) {
-        this._idComment = idComment;
+        this._id = idComment;
         this._postId = postId;
         this._email = email;
         this._body = body;
     }
     get idComment() {
-        return this._idComment;
+        return this._id;
     }
     get postId() {
         return this._postId;

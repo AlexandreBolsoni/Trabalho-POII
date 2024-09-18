@@ -1,18 +1,18 @@
 class Comment {
-  private _idComment: number;
+  private _id: number;
   private _postId: number;
   private _email: string;
   private _body: string;
 
   constructor( idComment: number, postId: number, email: string, body: string) {
-    this._idComment = idComment;
+    this._id = idComment;
     this._postId = postId;
     this._email = email;
     this._body = body;
   }
 
   get idComment(): number {
-    return this._idComment;
+    return this._id;
   }
 
   get postId(): number {

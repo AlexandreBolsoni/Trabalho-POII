@@ -3,18 +3,17 @@ import Content from './Content';
 import Comment  from './Comment';
 
 class Post extends Content{
-  private _idPost: number;
+
   private _body: string;
   private _comments : Comment[] = [];
 
-  constructor(idUser: number, title: string,idPost: number ,body: string) {
-    super(idUser, title);
-    this._idPost = idPost;
+  constructor(idUser: number, title: string,id: number ,body: string) {
+    super(idUser, title, id);
     this._body = body;
   }
 
-  get idPost(): number {
-    return this._idPost;
+  get id(): number {
+    return this._id;
   }
 
   get body(): string {
@@ -47,6 +46,10 @@ class Post extends Content{
     this._comments = this._comments.filter(item => item !== comment);
   }
 
+  public searchCommentById(id: number): Comment | undefined {
+    console.log('Searching comment by id...')
+    return this._comments.find((comment) => comment.idComment === id);
+  }
   public search(searchArguments: string): ISearchable[] | undefined {
     if( 
       this.title.includes(searchArguments) ||

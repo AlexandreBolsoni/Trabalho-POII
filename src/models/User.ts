@@ -85,14 +85,6 @@ export  class User {
     this._userContent = userContent;
   }
 
-
- /*search(searchTerm: string): ISearchable[] | null {
-   if (this.name.includes(searchTerm) || this.username.includes(searchTerm)) {
-     return [this];
-   }
-   return null;
- }*/
-
    public toString(): string {
     return `User: ${this.name}, Username: (${this.username}), (${this.address.toString()}), Phone: (${this.phone}), Website: (${this.website}), (${this.company.toString()}) ${this.userContent.toString()}`;
   }

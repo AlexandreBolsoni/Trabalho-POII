@@ -21,19 +21,6 @@ const Post_1 = __importDefault(require("../models/Post"));
 class UserController {
     constructor() {
         this._users = [];
-        /*
-        add(user: User): void {
-          this.users.push(user);
-        }
-      
-        remove(id: number): void {
-          this.users = this.users.filter(user => user._idUser !== id);
-        }
-      
-        searchUsers(criteria: string): User[] {
-          return this.users.filter(user => user.search(criteria) !== null);
-        }
-        */
     }
     get users() {
         return this._users;
@@ -45,17 +32,18 @@ class UserController {
     }
     fetchDataUsers() {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log('Seraching all content from API');
+            // Busca todos os usuários da API e instancia eles no na Classe;
             const usersData = yield (0, ApiService_1.default)("/users");
             usersData.forEach((user) => {
                 const newUser = new User_1.User(user.id, user.name, user.username, new Address_1.default(user.address.street, user.address.suite, user.address.city, user.address.zipcode), user.phone, user.website, new Company_1.default(user.company.name, user.company.catchPhrase, user.company.bs));
                 this._users.push(newUser);
             });
-            // Agora busca todos os posts
+            // Agora busca todos os posts e instancia os posts e os comentários
             const postsData = yield (0, ApiService_1.default)("/posts");
             const posts = postsData.map((post) => {
                 return new Post_1.default(post.userId, post.title, post.id, post.body);
             });
-            // Buscando os comentarios dos posts
             const commentsData = yield (0, ApiService_1.default)("/comments");
             const comments = commentsData.map((comment) => {
                 return new Comment_1.default(comment.id, comment.postId, comment.email, comment.body);
@@ -63,7 +51,7 @@ class UserController {
             // Associa os comentários aos posts
             comments.forEach((comment) => {
                 posts.forEach((post) => {
-                    if (comment.postId === post.idPost) {
+                    if (comment.postId === post.id) {
                         post.addComment(comment);
                     }
                 });
@@ -76,13 +64,21 @@ class UserController {
                     }
                 });
             });
+            console.log('Users has been initialized! \n');
         });
     }
     add(user) {
         this._users.push(user);
+        console.log('User has been added!');
+        console.log(this._users[this._users.length - 1]);
     }
-    remove(id) {
-        this._users = this._users.filter((user) => user.idUser !== id);
+    remove(user) {
+        console.log('Trying to remove user...');
+        this._users = this._users.filter((u) => u !== user);
+    }
+    searchById(id) {
+        console.log('Searching user by id...');
+        return this._users.find((user) => user.idUser === id);
     }
 }
 exports.default = UserController;

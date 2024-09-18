@@ -13,10 +13,12 @@ class UserController {
     return this._users;
   }
 
-  async init(): Promise<void> {
+  public async init(): Promise<void> {
     await this.fetchDataUsers();
   }
-  async fetchDataUsers(): Promise<void> {
+  private async fetchDataUsers(): Promise<void> {
+    console.log('Seraching all content from API')
+    // Busca todos os usuários da API e instancia eles no na Classe;
     const usersData: any = await fetchData("/users");
     usersData.forEach((user: any) => {
       const newUser = new User(
@@ -40,13 +42,12 @@ class UserController {
       this._users.push(newUser);
     });
 
-    // Agora busca todos os posts
+    // Agora busca todos os posts e instancia os posts e os comentários
     const postsData: any = await fetchData("/posts");
     const posts: Post[] = postsData.map((post: any) => {
       return new Post(post.userId, post.title, post.id, post.body);
     });
 
-    // Buscando os comentarios dos posts
     const commentsData: any = await fetchData("/comments");
     const comments: Comment[] = commentsData.map((comment: any) => {
       return new Comment(
@@ -60,7 +61,7 @@ class UserController {
     // Associa os comentários aos posts
     comments.forEach((comment) => {
       posts.forEach((post) => {
-        if (comment.postId === post.idPost) {
+        if (comment.postId === post.id) {
           post.addComment(comment);
         }
       });
@@ -74,28 +75,27 @@ class UserController {
         }
       });
     });
+
+    console.log('Users has been initialized! \n');
   }
 
   public add(user: User): void {
     this._users.push(user);
+    console.log('User has been added!');
+    console.log( this._users[this._users.length - 1] );
   }
 
-  public remove(id: number): void {
-    this._users = this._users.filter((user) => user.idUser !== id);
-  }
-  /*
-  add(user: User): void {
-    this.users.push(user);
+  public remove(user: User): void {
+    console.log('Trying to remove user...')
+    this._users = this._users.filter((u) => u !== user);
   }
 
-  remove(id: number): void {
-    this.users = this.users.filter(user => user._idUser !== id);
+  public searchById(id: number): User | undefined {
+    console.log('Searching user by id...')
+    return this._users.find((user) => user.idUser === id);
   }
 
-  searchUsers(criteria: string): User[] {
-    return this.users.filter(user => user.search(criteria) !== null);
-  }
-  */
+ 
 }
 
 export default UserController;

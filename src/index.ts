@@ -5,64 +5,76 @@ import ContainerContent from "./models/ContainerContent";
 import User from "../src/models/User";
 import Address from "./models/Address";
 import Company from "./models/Company";
-
+import Comment from "./models/Comment";
 
 async function main() {
   const userController = new UserController();
   await userController.init();
 
-  // Testando a exibição de todos os usuários e seus conteúdos
-  console.log("\n--- Lista de Usuários e Conteúdos ---\n");
-  userController.users.forEach((user) => {
-    console.log(user.toString());  // Exibindo os detalhes de cada usuário
-    user.userContent.content.forEach((content) => {
-      console.log(content.toString());  // Exibindo o conteúdo associado
-    });
-  });
-
-  // Buscando usuários por critério (exemplo: buscar pelo nome de usuário ou parte do nome)
-  const searchTerm = "Leanne";  // Modifique conforme necessário
-  console.log(`\n--- Resultados da busca por '${searchTerm}' ---\n`);
-  const searchResults = userController.users.filter((user) => {
-    return user.name.includes(searchTerm) || user.username.includes(searchTerm);
-  });
-
-  if (searchResults.length > 0) {
-    searchResults.forEach((user) => console.log(user.toString()));
-  } else {
-    console.log("Nenhum usuário encontrado.");
-  }
-
-  // Adicionando um novo usuário
-  const newUser = new User(
-    11, // ID do novo usuário
-    "New User", 
-    "newuser123", 
-    new Address("New Street", "Suite 10", "New City", "12345-678"),
-    "999-9999", 
-    "newwebsite.com", 
-    new Company("New Company", "We innovate", "technology")
+  //Adicionando um novo usuario;
+  const newUser: User = new User(
+    11,
+    "João da Silva",
+    "joaoSilva",
+    new Address("Rua das Laranjeiras", "123", "Cidade", "12345"),
+    "123456789",
+    "www.joao.com",
+    new Company("Company Name", "Catch Phrase", "BS")
   );
+  console.log("\n -- Trying to add new user... -- \n");
   userController.add(newUser);
 
-  console.log("\n--- Após adicionar novo usuário ---\n");
-  userController.users.forEach((user) => console.log(user.toString()));
+  //Buscando um usuário pelo id;
+  console.log("\n -- Trying to find user by id... -- \n");
+  const user = userController.searchById(11);
+  if (user) {
+    console.log(user.name);
+  } else {
+    console.log("User not found");
+  }
 
-  // Removendo um usuário pelo ID
-  userController.remove(11);
+  //Adicionando um novo post;
+  const newPost: Post = new Post(11, "Post 1", 1, "Body 1");
+  const newPost2: Post = new Post(12, "Post 2", 2, "Body 2");
+  console.log("\n -- Trying to add new post... -- \n");
+  userController.searchById(11)?.userContent.add(newPost);
+  userController.searchById(11)?.userContent.add(newPost2);
 
-  console.log("\n--- Após remover o usuário recém-adicionado ---\n");
-  userController.users.forEach((user) => console.log(user.toString()));
+  console.log(userController.searchById(11)?.userContent.content);
 
-  // Buscando e exibindo posts que contenham uma palavra específica no título ou no corpo
-  const postSearchTerm = "quia"; // Modifique para testar outros termos
-  console.log(`\n--- Buscando posts com o termo '${postSearchTerm}' ---\n`);
+  console.log("\n -- Trying to use search... -- \n");
   userController.users.forEach((user) => {
-    const foundPosts = user.userContent.search(postSearchTerm);
-    if (foundPosts && foundPosts.length > 0) {
-      foundPosts.forEach((post) => console.log(post.toString()));
+    const searchContent = user.userContent.search("ips");
+    if (searchContent !== undefined) {
+      console.log(searchContent);
     }
   });
+  console.log("\n -- Finished... -- \n");
+
+  console.log("\n -- Trying to add new comment... -- \n");
+  const newComment: Comment = new Comment(1, 1, "Email 1", "Body 1");
+  const userContent: any = userController
+    .searchById(11)
+    ?.userContent.searchById(1);
+  userContent.forEach((item: any) => {
+    if (item instanceof Post) {
+        item.addComment(newComment);
+      console.log("\n Adding comment... \n");
+      console.log(item);
+    } else {
+      console.log("\n Post not found \n");
+    }
+  });
+
+  console.log('\n -- Removing post... -- \n');
+  userController.searchById(11)?.userContent.remove(newPost2);
+  console.log(userController.searchById(11)?.userContent.content);
+
+  console.log('\n -- Removing user... -- \n');
+  userController.remove(newUser);
+  console.log(userController.users);
+
+  console.log('\n -- Finished... -- \n');
 }
 
 // Executar a função principal

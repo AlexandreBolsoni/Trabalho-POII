@@ -5,14 +5,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const Content_1 = __importDefault(require("./Content"));
 class Post extends Content_1.default {
-    constructor(idUser, title, idPost, body) {
-        super(idUser, title);
+    constructor(idUser, title, id, body) {
+        super(idUser, title, id);
         this._comments = [];
-        this._idPost = idPost;
         this._body = body;
     }
-    get idPost() {
-        return this._idPost;
+    get id() {
+        return this._id;
     }
     get body() {
         return this._body;
@@ -37,6 +36,10 @@ class Post extends Content_1.default {
     }
     removeComment(comment) {
         this._comments = this._comments.filter(item => item !== comment);
+    }
+    searchCommentById(id) {
+        console.log('Searching comment by id...');
+        return this._comments.find((comment) => comment.idComment === id);
     }
     search(searchArguments) {
         if (this.title.includes(searchArguments) ||
